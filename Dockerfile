@@ -24,13 +24,23 @@ RUN sudo chown -R coder:coder /home/coder/.local
 
 # Install a VS Code extension:
 # Note: we use a different marketplace than VS Code. See https://github.com/cdr/code-server/blob/main/docs/FAQ.md#differences-compared-to-vs-code
-# RUN code-server --install-extension esbenp.prettier-vscode
+RUN code-server --install-extension esbenp.prettier-vscode
 
 # Install apt packages:
-# RUN sudo apt-get install -y ubuntu-make
+RUN sudo apt-get install -y ubuntu-make
 
 # Copy files: 
-# COPY deploy-container/myTool /home/coder/myTool
+COPY deploy-container/myTool /home/coder/myTool
+
+# 1. install rclone
+# see https://rclone.org/install/ for other install options
+$ curl https://rclone.org/install.sh | sudo bash
+
+# 2. create a new rclone remote with your favorite storage provider ☁️
+$ rclone config
+
+# 3. Encode your rclone config and copy to your clipboard
+$ cat $(rclone config file | sed -n 2p) | base64 --wrap=0 # Linux
 
 # -----------
 
